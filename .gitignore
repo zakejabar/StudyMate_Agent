@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # === Python & Bytecode ===
 __pycache__/
 *.py[cod]
@@ -101,3 +102,11 @@ Desktop.ini
 data/
 uploads/
 downloads/
+=======
+# gitignore template for LangChain products, e.g., LangGraph, LangSmith
+# website: https://www.langchain.com/
+# website: https://www.langchain.com/langgraph
+
+# LangGraph
+.langgraph_api/
+>>>>>>> c9fb3c3f2cf633b1b6e532977c15149ed6b34ca2
