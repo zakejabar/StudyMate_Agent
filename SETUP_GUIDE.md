@@ -1,8 +1,8 @@
-# BinusBrain - Completion Checklist & Setup Guide
+# StudyMate - Completion Checklist & Setup Guide
 
 ## 🎯 **Current System Status: 90% Complete**
 
-The BinusBrain system is **structurally complete** but needs **configuration and setup** to become functional.
+The StudyMate system is **structurally complete** but needs **configuration and setup** to become functional.
 
 ---
 
@@ -59,9 +59,9 @@ NEO4J_PASSWORD=neo4j
 **Option B: Docker**
 ```bash
 docker run \
-    --name binusbrain-neo4j \
+    --name studymate-neo4j \
     -p7474:7474 -p7687:7687 \
-    -e NEO4J_AUTH=neo4j/binusbrain \
+    -e NEO4J_AUTH=neo4j/studymate \
     neo4j:latest
 ```
 
@@ -118,7 +118,7 @@ pip install -r requirements.txt
 # - Note the connection details
 
 # Option B: Docker (if you have Docker)
-docker run --name binusbrain-neo4j -p7474:7474 -p7687:7687 -e NEO4J_AUTH=neo4j/binusbrain neo4j:latest
+docker run --name studymate-neo4j -p7474:7474 -p7687:7687 -e NEO4J_AUTH=neo4j/studymate neo4j:latest
 ```
 
 ### **Step 3: Get OpenRouter Key (2 minutes)**
@@ -171,7 +171,7 @@ cat .env
 ```bash
 # Solution: Start Neo4j database
 # - Neo4j Desktop: Click "Start" on your database
-# - Docker: docker start binusbrain-neo4j
+# - Docker: docker start studymate-neo4j
 ```
 
 **3. "ModuleNotFoundError"**
@@ -246,7 +246,7 @@ If you want to extend the system:
 
 ## ✅ **System Status: READY TO DEPLOY**
 
-Once you complete the setup steps above, the BinusBrain system will be **100% functional** and ready for use by Binus students!
+Once you complete the setup steps above, the StudyMate system will be **100% functional** and ready for use by Binus students!
 
 **Estimated Setup Time**: 15-20 minutes total
 **Skill Level Required**: Beginner (following the steps above)

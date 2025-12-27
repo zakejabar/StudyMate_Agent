@@ -1,11 +1,11 @@
 """
-Public Agent Interface for BinusBrain
+Public Agent Interface for StudyMate
 """
 
 from src.agent_runner import run_agent
 
 
-class BinusBrainAgent:
+class StudyMateAgent:
     def upload(self, user_id: str, file_data: bytes, filename: str) -> dict:
         return run_agent({
             "action": "upload",
@@ -29,4 +29,4 @@ class BinusBrainAgent:
 
 
 # singleton
-agent = BinusBrainAgent()
+agent = StudyMateAgent()
