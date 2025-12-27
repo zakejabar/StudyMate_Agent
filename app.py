@@ -1,5 +1,5 @@
 """
-BinusBrain - Personal Knowledge Graph RAG System
+StudyMate - Personal Knowledge Graph RAG System
 Main Streamlit Application
 """
 import streamlit as st
@@ -7,14 +7,14 @@ import os
 from datetime import datetime
 
 # Import our custom modules
-from src.agent import agent as binus_agent
+from src.agent import agent as studymate_agent
 from src.graph_viz import graph_visualizer
 from config.neo4j_config import neo4j_config
 from config.llm_config import llm_config
 
 # Configure Streamlit page
 st.set_page_config(
-    page_title="mamatbinbudi - Personal Knowledge Graph",
+    page_title="StudyMate - Personal Knowledge Graph",
     page_icon="🧠",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -139,7 +139,7 @@ def render_upload_section():
                     file_data = uploaded_file.read()
                     
                     # Process with agent
-                    result = binus_agent.upload(
+                    result = studymate_agent.upload(
                         user_id=st.session_state.user_id,
                         file_data=file_data,
                         filename=uploaded_file.name
@@ -217,7 +217,7 @@ def render_chat_section():
         with st.spinner("Generating answer..."):
             try:
                 # Query with agent
-                result = binus_agent.ask(
+                result = studymate_agent.ask(
                     user_id=st.session_state.user_id,
                     question=question
                 )
@@ -281,7 +281,7 @@ def render_visualization_section():
                     st.download_button(
                         label="💾 Download JSON",
                         data=json_data,
-                        file_name=f"binusbrain_graph_{st.session_state.user_id}.json",
+                        file_name=f"studymate_graph_{st.session_state.user_id}.json",
                         mime="application/json"
                     )
                     
