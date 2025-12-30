@@ -1,82 +1,85 @@
 # StudyMate - Personal Knowledge Graph RAG System
 
-🧠 **A personal knowledge graph system for students to upload documents, build knowledge graphs, and query their materials using AI.**
+🧠 **Upload your study materials, let AI build a knowledge graph, then ask questions about everything you've learned.**
 
-## ✨ Features
+## What does this do?
 
-- **📁 File Upload & OCR**: Upload PDF, TXT, or images (screenshots) with automatic text extraction
-- **🕸️ Knowledge Graph**: Build personal knowledge graphs from your documents using LLM entity extraction
-- **💬 Smart Querying**: Ask questions about your materials with hybrid vector + graph search
-- **📊 Interactive Visualization**: Explore your knowledge graph with interactive PyVis visualization
-- **🔒 User Isolation**: Each user gets their own private knowledge graph
+- **Upload anything**: PDFs, text files, even screenshots - we'll extract the text automatically
+- **Builds a knowledge graph**: The AI finds entities and relationships in your documents and connects them
+- **Smart search**: Ask questions and get answers from across all your materials
+- **See the connections**: Visualize how everything in your notes relates to each other
+- **Your stuff stays yours**: Each user has their own private graph
 
-## 🚀 Quick Start
+## Getting Started
 
-### 1. Prerequisites
+### What you need first
 
 ```bash
-# Start Neo4j (required for graph database)
+# Start Neo4j (this is your graph database)
 neo4j start
-# Default credentials: neo4j / neo4j
+# Username and password are both "neo4j" by default
 
-# Get OpenRouter API key (free tier available)
-# Sign up at https://openrouter.ai and get your API key
+# Get an OpenRouter API key (they have a free tier)
+# Go to https://openrouter.ai and sign up
 ```
 
-### 2. Setup Environment
+### Setting things up
 
 ```bash
-# Clone/download the project
+# Go to your project folder
 cd binusbrain
 
-# Copy environment template
+# Copy the example environment file
 cp .env.example .env
 
-# Edit .env file with your OpenRouter API key
+# Open .env and add your keys:
 OPENROUTER_API_KEY=your_api_key_here
+NEO4J_URI=neo4j://127.0.0.1:7687
+NEO4J_USERNAME=neo4j
+NEO4J_PASSWORD=your_neo4j_password
 
-# Install dependencies
+# Install everything
 pip install -r requirements.txt
 ```
 
-### 3. Run Application
+### Run it
 
 ```bash
 streamlit run app.py
 ```
 
-The app will open at `http://localhost:8501`
+Open your browser to `http://localhost:8501` and you're good to go.
 
-## 📋 Usage Guide
+## How to use it
 
-### Upload Materials
-1. Go to "📁 Upload Materials" section
-2. Choose PDF, TXT, or image files
-3. Click "Process & Index"
-4. Wait for knowledge graph extraction
+### Adding your materials
+1. Click on "📁 Upload Materials"
+2. Pick your PDFs, text files, or screenshots
+3. Hit "Process & Index"
+4. Wait a bit while it builds the knowledge graph
 
-### Ask Questions
+### Asking questions
 1. Go to "💬 Ask Questions About Your Materials"
-2. Type your question about your uploaded documents
-3. Get AI-powered answers with context from your materials
+2. Type whatever you want to know
+3. Get answers pulled from everything you've uploaded
 
-### Visualize Knowledge Graph
-1. Go to "🕸️ Knowledge Graph Visualization"
+### Checking out the graph
+1. Head to "🕸️ Knowledge Graph Visualization"
 2. Click "🎨 Visualize Graph"
-3. Explore your interactive knowledge graph
+3. Play around with the interactive graph - you can see how everything connects
 
-## 🏗️ Architecture
+## How it works
 
-### Tech Stack
-- **Frontend**: Streamlit (Python web UI)
-- **LLM**: OpenRouter (Free Llama models)
+### What we're using
+- **Frontend**: Streamlit (simple Python web UI)
+- **LLM**: OpenRouter (free Llama models)
 - **Graph Database**: Neo4j
-- **OCR**: EasyOCR
+- **OCR**: EasyOCR (for reading screenshots)
 - **Vector Search**: Sentence Transformers
 - **Visualization**: PyVis
-- **Agent**: LangGraph (workflow orchestration)
+- **Agent**: LangGraph (handles the workflow)
 
-### System Components
+### The basic flow
 
 ```
 ┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
@@ -85,164 +88,161 @@ The app will open at `http://localhost:8501`
          │                       │                       │
          ▼                       ▼                       ▼
 ┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
-│ File Upload +   │    │ LLM Entity/Rel   │    │ User-Specific   │
-│ OCR Processing  │    │ Extraction       │    │ Graph Storage   │
+│ Upload files +  │    │ AI extracts      │    │ Stores in your  │
+│ OCR if needed   │    │ entities & links │    │ personal graph  │
 └─────────────────┘    └──────────────────┘    └─────────────────┘
          │                       │                       │
          ▼                       ▼                       ▼
 ┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
-│ Text Chunking   │    │ Vector + Graph   │    │ PyVis Graph     │
-│ & Preparation   │    │ Hybrid Search    │    │ Visualization   │
+│ Breaks text     │    │ Searches both    │    │ Shows you the   │
+│ into chunks     │    │ vectors & graph  │    │ visual network  │
 └─────────────────┘    └──────────────────┘    └─────────────────┘
 ```
 
-## 📁 Project Structure
+## Folder structure
 
 ```
 binusbrain/
-├── app.py                 # Main Streamlit application
-├── requirements.txt       # Python dependencies
-├── .env.example          # Environment variables template
+├── app.py                 # Main app file
+├── requirements.txt       # Python packages
+├── .env.example          # Template for your settings
 ├── config/
-│   ├── neo4j_config.py   # Neo4j connection config
-│   └── llm_config.py     # OpenRouter LLM config
+│   ├── neo4j_config.py   # Neo4j setup
+│   └── llm_config.py     # OpenRouter setup
 └── src/
-    ├── agent.py          # LangGraph workflow agent
-    ├── upload_handler.py # File upload + OCR processing
-    ├── kg_extractor.py   # LLM entity/relationship extraction
-    ├── neo4j_client.py   # Direct Neo4j operations
-    ├── query_engine.py   # Hybrid vector + graph search
-    └── graph_viz.py      # PyVis knowledge graph visualization
+    ├── agent.py          # LangGraph workflow
+    ├── upload_handler.py # Handles file uploads and OCR
+    ├── kg_extractor.py   # Extracts entities and relationships
+    ├── neo4j_client.py   # Talks to Neo4j
+    ├── query_engine.py   # Searches and answers questions
+    └── graph_viz.py      # Makes the visualization
 ```
 
-## 🎯 Key Features Explained
+## Cool things about this
 
-### 1. Lightweight Knowledge Graph Extraction
-Instead of using heavy Microsoft GraphRAG, we use:
-- **LLM Entity Extraction**: Extract entities and relationships using OpenRouter Llama
-- **Direct Neo4j Storage**: Store directly to Neo4j (no indexing pipeline)
-- **User Isolation**: Each user gets separate graph namespace
-- **Fast Processing**: 5-30 seconds per document vs. minutes for GraphRAG
+### Lightweight knowledge graph
+We're not using those huge Microsoft GraphRAG pipelines. Instead:
+- **Simple LLM extraction**: LLM pulls out entities and relationships
+- **Straight to Neo4j**: No complicated indexing pipelines
+- **Separate graphs per user**: Your stuff doesn't mix with anyone else's
+- **Actually fast**: Takes 5-30 seconds per document instead of several minutes
 
-### 2. Hybrid Query Engine
-- **Vector Similarity**: Find relevant document chunks using embeddings
-- **Graph Context**: Get related entities and relationships from knowledge graph
-- **LLM Answer Generation**: Combine both contexts for comprehensive answers
+### Hybrid search
+- **Vector similarity**: Finds relevant chunks using embeddings
+- **Graph context**: Grabs related entities and their connections
+- **AI answers**: Combines everything to give you complete answers
 
-### 3. Interactive Knowledge Graph
-- **Real-time Visualization**: Interactive network graph using PyVis
-- **Node Sizing**: Size based on connection count
-- **Color Coding**: Different colors for entity types
-- **Graph Statistics**: Nodes, edges, and type breakdowns
+### Interactive visualization
+- **Live network graph**: Click and drag nodes around
+- **Smart sizing**: Bigger nodes = more connections
+- **Color coded**: Different colors for different entity types
+- **Stats**: See how many nodes, edges, and entity types you have
 
-## ⚙️ Configuration
+## Settings
 
-### Environment Variables (.env)
+### Your .env file should look like:
 ```bash
 OPENROUTER_API_KEY=your_api_key_here
 NEO4J_URI=bolt://localhost:7687
 NEO4J_USERNAME=neo4j
-NEO4J_PASSWORD=neo4j
-USER_SESSION_TIMEOUT=3600
-MAX_FILE_SIZE_MB=10
+NEO4J_PASSWORD=your_neo4j_password
 ```
 
-### Neo4j Setup
-1. Download Neo4j Desktop (free)
-2. Create new database with default credentials
-3. Run: `neo4j start`
-4. Access at: `http://localhost:7474`
+### Setting up Neo4j
+1. Download Neo4j Desktop (it's free)
+2. Create a new database - it'll give you default credentials
+3. Run `neo4j start`
+4. You can check it at `http://localhost:7474`
 
-### OpenRouter Setup
-1. Sign up at https://openrouter.ai
-2. Add $10 credits (or use free tier)
-3. Get API key from "Keys" section
-4. We use: `meta-llama/llama-3.1-8b-instruct` (free tier)
+### Getting OpenRouter working
+1. Go to https://openrouter.ai and make an account
+2. Add $10 in credits (or stick with free tier)
+3. Grab your API key from the "Keys" section
+4. We're using `meta-llama/llama-3.1-8b-instruct` which is free
 
-## 🔧 Development
+## Testing stuff
 
-### Testing Components
+### Make sure everything's connected
 ```python
-# Test Neo4j connection
+# Test Neo4j
 from config.neo4j_config import neo4j_config
 print(neo4j_config.test_connection())
 
-# Test LLM connection
+# Test LLM
 from config.llm_config import llm_config
 success, response = llm_config.test_connection()
 print(f"LLM working: {success}")
 
-# Test upload handler
+# Test uploads
 from src.upload_handler import upload_handler
 text, type = upload_handler.process_upload(file_data, filename, user_id)
 ```
 
-### Customization
-- **LLM Model**: Change in `config/llm_config.py`
-- **Entity Types**: Modify in `src/kg_extractor.py`
-- **UI Styling**: Edit CSS in `app.py`
-- **Graph Colors**: Update in `src/graph_viz.py`
+### Want to customize?
+- **Different LLM**: Edit `config/llm_config.py`
+- **Entity types**: Change in `src/kg_extractor.py`
+- **UI look**: Mess with the CSS in `app.py`
+- **Graph colors**: Update `src/graph_viz.py`
 
-## 🚨 Troubleshooting
+## When things break
 
-### Common Issues
-
-**Neo4j Connection Failed**
+### Neo4j won't connect
 ```bash
-# Check if Neo4j is running
+# Check if it's running
 neo4j status
-neo4j start  # Start if not running
+neo4j start  # Start it up
 ```
 
-**OpenRouter API Error**
+### OpenRouter errors
 ```bash
-# Verify API key
+# Make sure your key is set
 echo $OPENROUTER_API_KEY
-# Check OpenRouter dashboard for credits
+# Check your credits on the OpenRouter dashboard
 ```
 
-**Import Errors**
+### Python import errors
 ```bash
-# Reinstall dependencies
+# Reinstall everything
 pip install -r requirements.txt --force-reinstall
 ```
 
-**Memory Issues with EasyOCR**
-- EasyOCR loads large models on first use
-- First OCR call may take 30-60 seconds
-- Subsequent calls are much faster
+### OCR taking forever
+- EasyOCR downloads big models the first time you use it
+- First OCR might take 30-60 seconds
+- After that it's much faster
 
-## 📊 Performance
+## Performance
 
-- **Upload Processing**: 5-30 seconds per document
-- **Query Response**: 2-10 seconds
-- **Graph Visualization**: Instant (cached data)
-- **Storage**: ~1KB per entity, ~500B per relationship
+- **Processing uploads**: 5-30 seconds per document
+- **Answering questions**: 2-10 seconds
+- **Loading visualization**: Pretty much instant
+- **Storage**: About 1KB per entity, 500 bytes per relationship
 
-## 🔒 Security & Privacy
+## Privacy stuff
 
-- **User Isolation**: Each user gets separate graph namespace
-- **Local Processing**: Most processing happens locally
-- **No Data Persistence**: Uploaded files are not stored permanently
-- **API Keys**: Stored in environment variables only
+- **Isolated users**: Everyone gets their own graph namespace
+- **Local processing**: Most of the work happens on your machine
+- **No permanent storage**: We don't save your uploaded files
+- **Secure keys**: API keys stay in your environment variables
 
-## 📈 Future Enhancements
+## What's next
 
-- [ ] User authentication system
-- [ ] Collaborative knowledge graphs
-- [ ] Advanced graph analytics
-- [ ] Export to other formats (GraphML, etc.)
-- [ ] Multi-language OCR support
-- [ ] Real-time collaboration features
+Some ideas for later:
+- [ ] Proper user login system
+- [ ] Share graphs with classmates
+- [ ] Proper Knowledge graph accuracy
+- [ ] Better graph analytics
+- [ ] Support more languages for OCR
+- [ ] Real-time collaborative editing
 
-## 📞 Support
+## Need help?
 
-For issues or questions:
+If something's not working:
 1. Check the troubleshooting section above
-2. Verify all dependencies are installed
-3. Ensure Neo4j and OpenRouter are properly configured
-4. Check console logs for detailed error messages
+2. Make sure you installed everything
+3. Verify Neo4j and OpenRouter are configured right
+4. Look at the console logs - they usually tell you what's wrong
 
 ---
 
-**Built with ❤️ for students who want to organize and explore their learning materials using AI-powered knowledge graphs.**
+**Made for students who want to actually understand and connect their study materials instead of just having a pile of PDFs they never look at again.**
